@@ -11,7 +11,7 @@ public class VotingSystem extends JFrame {
     // Define buttons for submitting the vote and checking results
     private JButton submitButton, checkResultsButton;
     // Initialize vote counters for each party
-    private int genZVotes = 0, millennialsVotes = 0, genAlphaVotes = 0;
+    private int g1 = 0, g2 = 0, g3 = 0;
 
     // Constructor to set up the GUI components
     public VotingSystem() {
@@ -69,6 +69,13 @@ public class VotingSystem extends JFrame {
     // Inner class to handle Submit button clicks
     private class SubmitButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            // Check if any text field is empty
+            if (nameField.getText().isEmpty() || phoneField.getText().isEmpty() || idField.getText().isEmpty()) {
+                // Show warning message if any field is empty
+                JOptionPane.showMessageDialog(null, "All fields must be filled before casting a vote.");
+                return;
+            }
+
             // Check if any party is selected; show a warning message if none are selected
             if (!genZButton.isSelected() && !millennialsButton.isSelected() && !genAlphaButton.isSelected()) {
                 JOptionPane.showMessageDialog(null, "Select a Party");
@@ -77,11 +84,11 @@ public class VotingSystem extends JFrame {
 
             // Increment the vote count based on the selected party
             if (genZButton.isSelected()) {
-                genZVotes++;
+                g1++;
             } else if (millennialsButton.isSelected()) {
-                millennialsVotes++;
+                g2++;
             } else if (genAlphaButton.isSelected()) {
-                genAlphaVotes++;
+                g3++;
             }
 
             // Show success message
@@ -96,13 +103,13 @@ public class VotingSystem extends JFrame {
             // Prepare the results message
             String resultMessage = String.format(
                     "Generation Z: %d votes\nMillennials: %d votes\nGeneration Alpha: %d votes\n",
-                    genZVotes, millennialsVotes, genAlphaVotes);
+                    g1, g2, g3);
 
             // Determine the party with the most votes
-            int maxVotes = Math.max(genZVotes, Math.max(millennialsVotes, genAlphaVotes));
-            if (maxVotes == genZVotes) {
+            int maxVotes = Math.max(g1, Math.max(g2, g3));
+            if (maxVotes == g1) {
                 resultMessage += "\nParty with the most votes: Generation Z";
-            } else if (maxVotes == millennialsVotes) {
+            } else if (maxVotes == g2) {
                 resultMessage += "\nParty with the most votes: Millennials";
             } else {
                 resultMessage += "\nParty with the most votes: Generation Alpha";
